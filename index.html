@@ -13,124 +13,96 @@
 </head>
 
 <body>
+    <!-- Main content goes here -->
+    <section class="products">
+        <h3>المنتجات المميزة</h3>
+        <div id="productDisplay"></div>
+    </section>
 
-    <!-- Hidden Login Button (styled as a color block) -->
-    <a href="login.html" class="hidden-login-btn" title="تسجيل الدخول"></a>
+    <!-- Product Form to Add/Update Product -->
+    <section class="admin-section">
+        <h2>إضافة أو تعديل المنتجات</h2>
+        <form id="productForm">
+            <label for="productName">اسم المنتج:</label>
+            <input type="text" id="productName" required><br>
 
-    <!-- Header Section -->
-    <header>
-        <div class="banner">
-            <img src="3,4x1,5 - فون تك - شارع مازدا - جوار البريد - 775883709.jpg" alt="لافتة متجر فنون تك لتقنية الجوالات الذكية" width="100%" height="auto">
-        </div>
-        <h1>فنون تك لتقنية الجوالات الذكية</h1>
-    </header>
+            <label for="productPrice">السعر:</label>
+            <input type="number" id="productPrice" required><br>
 
-    <!-- Navigation Bar -->
-    <nav>
-        <ul>
-            <li><a href="index.html">الرئيسية</a></li>
-            <li><a href="phones.html">الهواتف</a></li>
-            <li><a href="accessories.html">إكسسوارات</a></li>
-            <li><a href="register.html">التسجيل</a></li>
-            <li><a href="account.html">الحساب</a></li>
-            <li><a href="contact.html">اتصل بنا</a></li> <!-- Added contact page link -->
-        </ul>
-    </nav>
+            <label for="productDescription">وصف المنتج:</label>
+            <textarea id="productDescription" rows="4" required></textarea><br>
 
-    <!-- Main Content Section -->
-    <main>
-        <section class="content">
-            <h2>أهلاً بكم في فنون تك</h2>
-            <p>نقدم أحدث الهواتف الذكية والإكسسوارات بالإضافة إلى برامج شحن التطبيقات لمستخدمي الأجهزة الذكية.</p>
-            <p>اتصل بنا الآن للاستفسار أو تقديم الطلبات الخاصة بك على الرقم: <a href="tel:+775883709">775883709</a></p>
-        </section>
+            <label for="productImage">اختيار صورة المنتج:</label>
+            <input type="file" id="productImageFile" accept="image/*" required><br>
 
-        <!-- Featured Products Section -->
-        <section class="products">
-            <h3>المنتجات المميزة</h3>
-            <div class="product-list">
-                <!-- Product 1 -->
-                <div class="product">
-                    <img src="phone1.jpg" alt="هاتف ذكي موديل 1" width="200" height="200">
-                    <h4>هاتف ذكي موديل 1</h4>
-                    <p>أفضل هاتف ذكي لعام 2024 مع مواصفات متقدمة وشاشة OLED فائقة الوضوح.</p>
-                    <p>السعر: 1000 دولار</p>
-                </div>
+            <button type="submit">إضافة المنتج</button>
+        </form>
+    </section>
 
-                <!-- Product 2 -->
-                <div class="product">
-                    <img src="phone2.jpg" alt="هاتف ذكي موديل 2" width="200" height="200">
-                    <h4>هاتف ذكي موديل 2</h4>
-                    <p>هاتف ذكي بتقنية الكاميرا الثلاثية ومقاومة الماء، مثالي للتصوير الفوتوغرافي.</p>
-                    <p>السعر: 800 دولار</p>
-                </div>
+    <!-- JavaScript to Load and Submit Products -->
+    <script>
+        const backendUrl = 'https://your-app-name.herokuapp.com';
 
-                <!-- Product 3 -->
-                <div class="product">
-                    <img src="accessory1.jpg" alt="غطاء حماية فاخر" width="200" height="200">
-                    <h4>غطاء حماية فاخر</h4>
-                    <p>غطاء حماية مميز بتصميم أنيق يحمي جهازك من الصدمات والخدوش.</p>
-                    <p>السعر: 50 دولار</p>
-                </div>
+        // Fetch and display products from the server
+        function displayProducts() {
+            fetch(`${backendUrl}/getProducts`)
+                .then(response => response.json())
+                .then(products => {
+                    const productDisplay = document.getElementById('productDisplay');
+                    productDisplay.innerHTML = '';
+                    products.forEach(product => {
+                        const productDiv = document.createElement('div');
+                        productDiv.innerHTML = `
+                            <img src="${product.image}" alt="${product.name}" width="200" height="200">
+                            <h4>${product.name}</h4>
+                            <p>${product.description}</p>
+                            <p>السعر: ${product.price} دولار</p>
+                        `;
+                        productDisplay.appendChild(productDiv);
+                    });
+                })
+                .catch(error => console.error('Error fetching products:', error));
+        }
 
-                <!-- Product 4 -->
-                <div class="product">
-                    <img src="charger1.jpg" alt="شاحن سريع" width="200" height="200">
-                    <h4>شاحن سريع</h4>
-                    <p>شاحن سريع بتقنية الشحن اللاسلكي للأجهزة الذكية الحديثة.</p>
-                    <p>السعر: 70 دولار</p>
-                </div>
-            </div>
-        </section>
+        // Add a new product via form submission
+        document.getElementById('productForm').addEventListener('submit', function (e) {
+            e.preventDefault();
 
-        <!-- Pagination -->
-        <div class="pagination">
-            <ul>
-                <li><a href="#">«</a></li>
-                <li><a href="#">1</a></li>
-                <li><a href="#">2</a></li>
-                <li><a href="#">3</a></li>
-                <li><a href="#">4</a></li>
-                <li><a href="#" class="active">5</a></li>
-                <li><a href="#">»</a></li>
-            </ul>
-        </div>
+            const name = document.getElementById('productName').value;
+            const price = document.getElementById('productPrice').value;
+            const description = document.getElementById('productDescription').value;
+            const imageFile = document.getElementById('productImageFile').files[0];
 
-        <!-- Promotional Banner -->
-        <section class="promotion">
-            <h3>عروض حصرية</h3>
-            <p>قم بزيارتنا الآن واحصل على خصومات حصرية على جميع الهواتف الذكية والإكسسوارات.</p>
-        </section>
-    </main>
+            const reader = new FileReader();
+            reader.readAsDataURL(imageFile);
+            reader.onload = function (event) {
+                const imageSrc = event.target.result;
 
-     <!-- Footer -->
-     <footer>
-        <div class="footer-content">
-            <div class="footer-section">
-                <h4>خدمة العملاء</h4>
-                <ul>
-                    <li><a href="#">طرق الدفع</a></li>
-                    <li><a href="#">الشحن والتوصيل</a></li>
-                    <li><a href="#">سياسة الاستبدال والاسترجاع</a></li>
-                </ul>
-            </div>
-            <div class="footer-section">
-                <h4>أخرى</h4>
-                <ul>
-                    <li><a href="#">الرئيسية</a></li>
-                    <li><a href="#">التسجيل</a></li>
-                    <li><a href="#">إتصل بنا</a></li>
-                </ul>
-            </div>
-            <div class="footer-section footer-contact">
-                <h4>للتواصل</h4>
-                <p>صنعاء-الحصبه- شارع مازاد- بعد الكريمي- جوار البريد</p>
-                <p>+967 775883709</p>
-                <p>+967 773011027</p>
-            </div>
-        </div>
-        <p>جميع الحقوق محفوظة &copy; 2024 - متجر فنون تك للجوالات</p>
-    </footer>
+                const productData = {
+                    name,
+                    price,
+                    description,
+                    image: imageSrc
+                };
 
+                fetch(`${backendUrl}/addProduct`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(productData)
+                })
+                .then(response => response.text())
+                .then(data => {
+                    alert(data);
+                    displayProducts(); // Reload products after adding
+                })
+                .catch(error => console.error('Error adding product:', error));
+            };
+        });
+
+        // Load the products when the page loads
+        window.onload = displayProducts;
+    </script>
 </body>
 </html>
