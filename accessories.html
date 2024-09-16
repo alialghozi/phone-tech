@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فنون تك - إكسسوارات الجوالات</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>إكسسوارات الجوالات</h1>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="phones.html">الهواتف</a></li>
+            <li><a href="accessories.html">إكسسوارات</a></li>
+        </ul>
+    </nav>
+
+    <!-- Products Section -->
+    <section class="products">
+        <h3>المنتجات المميزة - إكسسوارات</h3>
+        <div id="productDisplay"></div>
+    </section>
+
+    <!-- JavaScript to Filter and Display Accessories -->
+    <script>
+        function getProducts() {
+            return JSON.parse(localStorage.getItem('products')) || [];
+        }
+
+        function displayAccessories() {
+            const products = getProducts();
+            const productDisplay = document.getElementById('productDisplay');
+            productDisplay.innerHTML = '';
+
+            // Filter products to show only accessories
+            const accessories = products.filter(product => product.category === 'accessories');
+
+            if (accessories.length === 0) {
+                productDisplay.innerHTML = "<p>لا توجد إكسسوارات مضافة حتى الآن.</p>";
+                return;
+            }
+
+            accessories.forEach((product) => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h4>${product.name}</h4>
+                    <p>${product.description}</p>
+                    <p class="price">السعر: ${product.price} دولار</p>
+                `;
+
+                productDisplay.appendChild(productDiv);
+            });
+        }
+
+        // Display accessories when the page loads
+        displayAccessories();
+    </script>
+
+</body>
+</html>

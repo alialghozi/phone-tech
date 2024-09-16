@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فنون تك - الهواتف الذكية</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to the updated CSS file -->
+    <link rel="stylesheet" href="prodectStyle.css">
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1>الهواتف الذكية</h1>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="phones.html">الهواتف</a></li>
+            <li><a href="accessories.html">إكسسوارات</a></li>
+        </ul>
+    </nav>
+
+    <!-- Products Section -->
+    <section class="products">
+        <!--<h3>المنتجات المميزة - الهواتف الذكية</h3>-->
+        <div id="productDisplay"></div>
+    </section>
+
+    <!-- JavaScript to Filter and Display Phones -->
+    <script>
+        function getProducts() {
+            return JSON.parse(localStorage.getItem('products')) || [];
+        }
+
+        function displayPhones() {
+            const products = getProducts();
+            const productDisplay = document.getElementById('productDisplay');
+            productDisplay.innerHTML = '';
+
+            // Filter products to show only phones
+            const phones = products.filter(product => product.category === 'phones');
+
+            if (phones.length === 0) {
+                productDisplay.innerHTML = "<p>لا توجد هواتف مضافة حتى الآن.</p>";
+                return;
+            }
+
+            phones.forEach((product) => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h4>${product.name}</h4>
+                    <p>${product.description}</p>
+                    <p class="price">السعر: ${product.price} دولار</p>
+                `;
+
+                productDisplay.appendChild(productDiv);
+            });
+        }
+
+        // Display phones when the page loads
+        displayPhones();
+    </script>
+
+</body>
+</html>

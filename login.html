@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تسجيل الدخول إلى لوحة التحكم</title>
+    <style>
+        .login-container {
+            width: 300px;
+            margin: 100px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            text-align: center;
+            background-color: white;
+        }
+
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        .login-container button {
+            padding: 10px 20px;
+            background-color: #b00020;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #a4001d;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-container">
+        <h2>تسجيل الدخول</h2>
+        <input type="password" id="password" placeholder="أدخل كلمة المرور" required>
+        <button onclick="login()">تسجيل الدخول</button>
+    </div>
+
+    <!-- JavaScript for handling login -->
+    <script>
+        // Store the SHA-256 hashed password for "alialghozi@2001"
+        const storedPasswordHash = '7e154711cd4921d368075e9b3d386126162233d37bc3f4d8597aee8f2e11fff9'; // Replace with your own hash
+
+        // Function to hash the entered password and compare it to the stored hash
+        async function login() {
+            const password = document.getElementById('password').value;
+            const enteredHash = await hashPassword(password);
+
+            if (enteredHash === storedPasswordHash) {
+                localStorage.setItem('isAdmin', 'true'); // Set login status in localStorage
+                window.location.href = 'admin.html'; // Redirect to admin page
+            } else {
+                alert('كلمة المرور غير صحيحة.');
+            }
+        }
+
+        // Function to hash the password using SHA-256
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+            return hashHex;
+        }
+    </script>
+
+</body>
+</html>

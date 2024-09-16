@@ -1,0 +1,283 @@
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  direction: rtl;
+}
+
+/* Header Styles */
+header {
+  background-color: #e32548; /* Red background from the sign */
+  color: white;
+  text-align: center;
+  padding: 20px;
+}
+
+.banner img {
+  width: 100%;
+  max-height: 450px; /* You can adjust the height as needed */
+  object-fit: cover;
+  display: block;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-size: 2.5em;
+  font-weight: bold;
+  margin: 0;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); /* Adding a shadow effect */
+}
+
+/* Navigation Styles */
+nav {
+  background-color: #b00020;
+  padding: 10px;
+  text-align: center;
+
+}
+
+nav ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline-block;
+  margin-left: 15px;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  padding: 10px 20px;
+  font-weight: bold;
+  background-color: #8b0000; /* Darker shade of red */
+  border-radius: 5px;
+}
+
+nav ul li a:hover {
+  background-color: #a4001d;
+}
+
+/* Search Bar Styles */
+.search-bar {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.search-bar input {
+  width: 40%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* Content Section Styles */
+.content {
+  text-align: center;
+  padding: 50px 20px;
+  background-color: #fff;
+  border-top: 2px solid #b00020; /* Red border at the top of the content */
+}
+
+.content h2 {
+  font-size: 2em;
+  color: #b00020; /* Red title color */
+  margin-bottom: 20px;
+}
+
+.content p {
+  font-size: 1.2em;
+  color: #333;
+}
+
+/* Products Section */
+.products {
+  padding: 50px 20px;
+  background-color: #f4f4f4;
+}
+
+.products h3 {
+  font-size: 2em;
+  color: #b00020;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  text-align: center;
+}
+
+.product {
+  background-color: white;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.product img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.product h4 {
+  font-size: 1.2em;
+  color: #333;
+  margin: 15px 0;
+}
+
+.product p {
+  color: #666;
+  margin: 5px 0;
+}
+
+.product .price {
+  color: #b00020;
+  font-weight: bold;
+  font-size: 1.2em;
+}
+
+/* Pagination */
+.pagination {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.pagination ul {
+  list-style-type: none;
+  padding: 0;
+  display: inline-block;
+}
+
+.pagination ul li {
+  display: inline-block;
+  margin: 0 5px;
+}
+
+.pagination ul li a {
+  text-decoration: none;
+  padding: 10px 15px;
+  background-color: #b00020;
+  color: white;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+
+.pagination ul li a.active {
+  background-color: #8b0000;
+}
+
+.pagination ul li a:hover {
+  background-color: #a4001d;
+}
+
+/* Footer Styles */
+footer {
+  background-color: #1c1c1c;
+  color: white;
+  padding: 40px 20px;
+  font-size: 1rem;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-section {
+  width: 22%; /* Adjust this to fit the desired layout */
+  margin-bottom: 20px;
+}
+
+.footer-section h4 {
+  font-size: 1.3rem;
+  margin-bottom: 15px;
+  color: white;
+}
+
+.footer-section p, .footer-section ul {
+  margin: 0;
+  padding: 0;
+  list-style-type: none;
+}
+
+.footer-section ul li {
+  margin-bottom: 10px;
+}
+
+.footer-section ul li a {
+  color: white;
+  text-decoration: none;
+}
+
+.footer-section ul li a:hover {
+  color: #ffcc00; /* Hover color */
+}
+
+/* Footer Contact Info */
+.footer-contact p {
+  margin-bottom: 10px;
+  color: white;
+}
+
+/* Footer Bottom */
+footer p {
+  text-align: center;
+  margin-top: 20px;
+  border-top: 1px solid #444;
+  padding-top: 15px;
+  font-size: 1rem;
+}
+
+/* Exchange Rates Section */
+.exchange-rates {
+  width: 100%;
+}
+
+.exchange-rates td {
+  padding: 10px;
+  font-size: 1.1em;
+  color: #b00020;
+  border: 1px solid #ccc;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .footer-section {
+      width: 100%;
+      text-align: center;
+  }
+
+  .footer-content {
+      flex-direction: column;
+      text-align: center;
+  }
+
+  .product-list {
+      grid-template-columns: repeat(2, 1fr);
+  }
+
+  .pagination ul li a {
+      padding: 8px 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .product-list {
+      grid-template-columns: 1fr;
+  }
+
+  .search-bar input {
+      width: 90%;
+  }
+}

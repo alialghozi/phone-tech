@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>لوحة تحكم المنتجات - فنون تك</title>
+    <link rel="stylesheet" href="admin-styles.css"> <!-- Link to external CSS file -->
+    <script>
+        // Check if the user is logged in as admin
+        function checkAdminLogin() {
+            if (localStorage.getItem('isAdmin') !== 'true') {
+                window.location.href = 'login.html'; // Redirect to login page if not logged in
+            }
+        }
+
+        // Function to log out and remove admin rights
+        function logout() {
+            localStorage.removeItem('isAdmin');
+            window.location.href = 'login.html'; // Redirect to login page after logout
+        }
+    </script>
+</head>
+<body onload="checkAdminLogin()">
+
+    <!-- Admin Header -->
+    <header>
+        <h1>لوحة تحكم المنتجات</h1>
+        <button onclick="logout()" style="float: right; padding: 10px 20px; background-color: #b00020; color: white; border: none; border-radius: 5px;">تسجيل الخروج</button>
+    </header>
+
+    <!-- Product Form to Add/Update Product -->
+    <section class="admin-section">
+        <h2>إضافة أو تعديل المنتجات</h2>
+        <form id="productForm">
+            <label for="productName">اسم المنتج:</label>
+            <input type="text" id="productName" required><br>
+
+            <label for="productPrice">السعر:</label>
+            <input type="number" id="productPrice" required><br>
+
+            <label for="productDescription">وصف المنتج:</label>
+            <textarea id="productDescription" rows="4" required></textarea><br>
+
+            <label for="productImage">اختيار صورة المنتج:</label>
+            <input type="file" id="productImageFile" accept="image/*" required><br>
+
+            <!-- Category Selection (Phones or Accessories) -->
+            <label for="productCategory">اختر التصنيف:</label>
+            <select id="productCategory" required>
+                <option value="phones">هواتف</option>
+                <option value="accessories">إكسسوارات</option>
+            </select><br>
+
+            <button type="submit">إضافة المنتج</button>
+        </form>
+    </section>
+
+    <!-- Product List Section -->
+    <section class="admin-section">
+        <h2>المنتجات الحالية</h2>
+        <div id="productList"></div>
+    </section>
+
+    <!-- JavaScript for Product Management -->
+    <script>
+        // Initialize products array from localStorage
+        let products = JSON.parse(localStorage.getItem('products')) || [];
+
+        // Function to render the products in the admin page
+        function renderProducts() {
+            const productList = document.getElementById('productList');
+            productList.innerHTML = '';
+
+            products.forEach((product, index) => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product-item');
+
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" width="100" height="100">
+                    <h3>${product.name}</h3>
+                    <p>${product.description}</p>
+                    <p>السعر: ${product.price} دولار</p>
+                    <p>التصنيف: ${product.category === 'phones' ? 'هواتف' : 'إكسسوارات'}</p>
+                    <button onclick="deleteProduct(${index})">حذف</button>
+                    <button onclick="editProduct(${index})">تعديل</button>
+                `;
+
+                productList.appendChild(productDiv);
+            });
+
+            // Save the products to localStorage after rendering
+            localStorage.setItem('products', JSON.stringify(products));
+        }
+
+        // Handle form submission to add a new product
+        document.getElementById('productForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('productName').value;
+            const price = document.getElementById('productPrice').value;
+            const description = document.getElementById('productDescription').value;
+            const imageFile = document.getElementById('productImageFile').files[0];
+            const category = document.getElementById('productCategory').value;
+
+            if (imageFile) {
+                const reader = new FileReader();
+                reader.readAsDataURL(imageFile);
+                reader.onload = function (event) {
+                    const imageSrc = event.target.result; // Base64 image URL
+
+                    const newProduct = { name, price, description, image: imageSrc, category };
+                    products.push(newProduct);
+
+                    // Render updated product list
+                    renderProducts();
+
+                    // Reset the form
+                    document.getElementById('productForm').reset();
+                };
+            }
+        });
+
+        // Function to delete a product
+        function deleteProduct(index) {
+            products.splice(index, 1);
+            renderProducts();
+        }
+
+        // Function to edit a product
+        function editProduct(index) {
+            const product = products[index];
+
+            document.getElementById('productName').value = product.name;
+            document.getElementById('productPrice').value = product.price;
+            document.getElementById('productDescription').value = product.description;
+            document.getElementById('productCategory').value = product.category;
+
+            deleteProduct(index);
+        }
+
+        // Initial rendering of products
+        renderProducts();
+    </script>
+
+</body>
+</html>

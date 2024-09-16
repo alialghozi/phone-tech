@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فنون تك لتقنية الجوالات الذكية</title>
+    <link rel="stylesheet" href="styles.css"> <!-- Link to external CSS -->
+    <style>
+        /* Additional CSS to improve the layout and display */
+        .products {
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #ccc;
+        }
+
+        .product {
+            display: inline-block;
+            width: 22%;
+            margin: 1%;
+            padding: 15px;
+            background-color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            border-radius: 8px;
+        }
+
+        .product img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .product h4 {
+            color: #b00020;
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .product p {
+            font-size: 1em;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .product p.price {
+            font-weight: bold;
+            color: #b00020;
+        }
+
+        @media screen and (max-width: 768px) {
+            .product {
+                width: 46%; /* Adjust for smaller screens */
+            }
+        }
+
+        @media screen and (max-width: 480px) {
+            .product {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <div class="banner">
+            <img src="ali.jpg" alt="لافتة متجر فنون تك لتقنية الجوالات الذكية" width="100%" height="auto">
+        </div>
+        <h1>فنون تك لتقنية الجوالات الذكية</h1>
+    </header>
+
+    <!-- Navigation Bar -->
+    <nav>
+        <ul>
+            <li><a href="index.html">الرئيسية</a></li>
+            <li><a href="phones.html">الهواتف</a></li>
+            <li><a href="accessories.html">إكسسوارات</a></li>
+            <li><a href="register.html">التسجيل</a></li>
+            <li><a href="account.html">الحساب</a></li>
+            <li><a href="contact.html">اتصل بنا</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main Content Section -->
+    <main>
+        <section class="content">
+            <h2>أهلاً بكم في فنون تك</h2>
+            <p>نقدم أحدث الهواتف الذكية والإكسسوارات بالإضافة إلى برامج شحن التطبيقات لمستخدمي الأجهزة الذكية.</p>
+        </section>
+
+        <!-- Featured Products Section -->
+        <section class="products">
+            <h3>المنتجات المميزة</h3>
+            <div id="productDisplay"></div>
+        </section>
+    </main>
+
+    <!-- JavaScript to Load Products -->
+    <script>
+        function getProducts() {
+            return JSON.parse(localStorage.getItem('products')) || [];
+        }
+
+        function displayProducts() {
+            const products = getProducts();
+            const productDisplay = document.getElementById('productDisplay');
+            productDisplay.innerHTML = '';
+
+            if (products.length === 0) {
+                productDisplay.innerHTML = "<p>لا توجد منتجات مضافة حتى الآن.</p>";
+                return;
+            }
+
+            // Create product cards dynamically from products array
+            products.forEach((product) => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h4>${product.name}</h4>
+                    <p>${product.description}</p>
+                    <p class="price">السعر: ${product.price} دولار</p>
+                `;
+
+                productDisplay.appendChild(productDiv);
+            });
+        }
+
+        // Event listener for storage changes
+        window.addEventListener('storage', displayProducts);
+
+        // Initial display of products when the page loads
+        displayProducts();
+    </script>
+
+ <!-- Footer -->
+ <footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>أسعار الصرف</h4>
+            <table class="exchange-rates">
+                <tr>
+                    <td>540 ريال يمني</td>
+                    <td>دولار أمريكي</td>
+                </tr>
+                <tr>
+                    <td>143 ريال يمني</td>
+                    <td>ريال سعودي</td>
+                </tr>
+            </table>
+        </div>
+        <div class="footer-section">
+            <h4>خدمة العملاء</h4>
+            <ul>
+                <li><a href="#">طرق الدفع</a></li>
+                <li><a href="#">الشحن والتوصيل</a></li>
+                <li><a href="#">سياسة الاستبدال والاسترجاع</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h4>أخرى</h4>
+            <ul>
+                <li><a href="#">الرئيسية</a></li>
+                <li><a href="#">التسجيل</a></li>
+                <li><a href="#">إتصل بنا</a></li>
+            </ul>
+        </div>
+        <div class="footer-section footer-contact">
+            <h4>للتواصل</h4>
+            <p>صنعاء - شارع صنعاء</p>
+            <p>+967 777771100</p>
+            <p>+967 770080001</p>
+        </div>
+    </div>
+    <p>جميع الحقوق محفوظة &copy; 2024 - متجر فنون تك للجوالات</p>
+</footer>
+
+</body>
+
+</html>
