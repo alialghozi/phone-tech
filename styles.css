@@ -280,4 +280,23 @@ footer p {
   .search-bar input {
       width: 90%;
   }
+  /* Hidden Login Button */
+.hidden-login-btn {
+  position: fixed;
+  top: 10px;
+  left: 10px; /* Or right: 10px for the right side */
+  width: 30px;
+  height: 30px;
+  background-color: #b00020; /* Button color */
+  border-radius: 50%;
+  display: inline-block;
+  text-indent: -9999px; /* Hide the text */
+  cursor: pointer;
+  z-index: 1000; /* Ensure it stays on top of other elements */
+}
+
+.hidden-login-btn:hover {
+  background-color: #a4001d; /* Slightly different color on hover */
+}
+
 }
